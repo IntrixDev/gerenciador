@@ -1,0 +1,48 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Movimentacao</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Operacao</th>
+                <td>{{ entity.operacao }}</td>
+            </tr>
+            <tr>
+                <th>Valor</th>
+                <td>{{ entity.valor }}</td>
+            </tr>
+            <tr>
+                <th>Formapagamento</th>
+                <td>{{ entity.formaPagamento }}</td>
+            </tr>
+            <tr>
+                <th>Vezes</th>
+                <td>{{ entity.vezes }}</td>
+            </tr>
+            <tr>
+                <th>Observacao</th>
+                <td>{{ entity.observacao }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('post_movimentacao') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('post_movimentacao_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

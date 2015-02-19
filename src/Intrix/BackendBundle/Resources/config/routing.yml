@@ -1,0 +1,9 @@
+movimentacao:
+        resource: "@BackendBundle/Resources/config/routing/movimentacao.yml"
+        prefix:   /movimentacao
+
+produto:
+        resource: "@BackendBundle/Resources/config/routing/produto.yml"
+        prefix:   /produto
+    
+

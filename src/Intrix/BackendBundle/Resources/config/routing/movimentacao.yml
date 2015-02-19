@@ -1,0 +1,30 @@
+movimentacao_list:
+    path:     /
+    defaults: { _controller: "BackendBundle:Movimentacao:index" }
+
+movimentacao_show:
+    path:     /{id}/ver
+    defaults: { _controller: "BackendBundle:Movimentacao:show" }
+
+movimentacao_new:
+    path:     /novo
+    defaults: { _controller: "BackendBundle:Movimentacao:new" }
+
+movimentacao_create:
+    path:     /criar
+    defaults: { _controller: "BackendBundle:Movimentacao:create" }
+    requirements: { _method: post }
+
+movimentacao_edit:
+    path:     /{id}/editar
+    defaults: { _controller: "BackendBundle:Movimentacao:edit" }
+
+movimentacao_update:
+    path:     /{id}/update
+    defaults: { _controller: "BackendBundle:Movimentacao:update" }
+    requirements: { _method: post|put }
+
+movimentacao_delete:
+    path:     /{id}/deletar
+    defaults: { _controller: "BackendBundle:Movimentacao:delete" }
+    requirements: { _method: post|delete }

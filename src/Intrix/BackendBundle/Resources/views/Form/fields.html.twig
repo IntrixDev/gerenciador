@@ -1,0 +1,128 @@
+<!-- form_start -->
+{% block form_start %}
+    {% spaceless %}
+        {% set method = method|upper %}
+        {% if method in ["GET", "POST"] %}
+            {% set form_method = method %}
+        {% else %}
+            {% set form_method = "POST" %}
+        {% endif %}
+        <form 
+            name="{{ form.vars.name }}" 
+            method="{{ form_method|lower }}" 
+            action="{{ action }}"
+            {% for attrname, attrvalue in attr %}
+                {% if attrname != 'titulo' %}
+                    {{ attrname }}="{{ attrvalue }}"
+                {% endif %}
+            {% endfor %}
+            {% if multipart %} 
+                enctype="multipart/form-data"
+            {% endif %}>
+            {% if form_method != method %}
+                <input type="hidden" name="_method" value="{{ method }}" />
+            {% endif %}
+        {% endspaceless %}
+    {% endblock form_start %}
+
+    <!-- form_widget_compound -->
+    {% block form_widget_compound %}
+        {% spaceless %}
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h6 class="panel-title">
+                        {% if attr.titulo is defined %}
+                            {{attr.titulo}}
+                        {% endif %}
+                    </h6>
+                </div>
+                <div class="panel-body">
+                    {% for flashMessage in app.session.flashbag.get('notice') %}
+                        <div class="alert alert-success fade in widget-inner">
+                            <button type="button" class="close" data-dismiss="alert">×</button>
+                            <i class="fa fa-check"></i> {{ flashMessage }}
+                        </div>
+                    {% endfor %}
+
+                    {% if form.parent is empty %}
+                        {{ form_errors(form) }}
+                    {% endif %}
+                    {{ block('form_rows') }}
+                    {{ form_rest(form) }}
+                </div>
+            </div>
+        {% endspaceless %}
+    {% endblock form_widget_compound %}
+
+    <!-- form_widget_simple -->
+    {% block form_widget_simple %}
+        {% spaceless %}
+            {% set type = type|default('text') %}
+            <div class="col-sm-8">
+                <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+            </div>
+        {% endspaceless %}
+    {% endblock form_widget_simple %}
+
+    <!-- form_row -->
+    {% block form_row %}
+        {% spaceless %}
+            <div class="form-group">
+                {{ form_label(form) }}
+                {{ form_errors(form) }}
+                {{ form_widget(form) }}
+            </div>
+        {% endspaceless %}
+    {% endblock form_row %}
+
+    <!-- form_label -->
+    {% block form_label %}
+        {% spaceless %}
+            <label class="col-sm-3 control-label text-right">{{ label|trans({}, translation_domain) }}:</label>
+        {% endspaceless %}
+    {% endblock form_label %}
+
+    <!-- textarea_widget -->
+    {% block textarea_widget %}
+        {% spaceless %}
+            <div class="col-sm-8">
+                <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
+            </div>
+        {% endspaceless %}
+    {% endblock textarea_widget %}
+
+    <!-- choice_widget_collapsed -->
+    {% block choice_widget_collapsed %}
+        {% spaceless %}
+            {% if required and empty_value is none and not empty_value_in_choices and not multiple %}
+                {% set required = false %}
+            {% endif %}
+            <div class="col-sm-8">
+                <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+                    {% if empty_value is not none %}
+                        <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ empty_value|trans({}, translation_domain) }}</option>
+                    {% endif %}
+                    {% if preferred_choices|length > 0 %}
+                        {% set options = preferred_choices %}
+                        {{ block('choice_widget_options') }}
+                        {% if choices|length > 0 and separator is not none %}
+                            <option disabled="disabled">{{ separator }}</option>
+                        {% endif %}
+                    {% endif %}
+                    {% set options = choices %}
+                    {{ block('choice_widget_options') }}
+                </select>
+            </div>
+        {% endspaceless %}
+    {% endblock choice_widget_collapsed %}
+
+    <!-- button_widget -->
+    {% block button_widget %}
+        {% spaceless %}
+            <div class="form-actions text-center">
+                <input type="submit" value="Enviar" class="btn btn-primary">
+            </div>
+        {% endspaceless %}
+    {% endblock button_widget %}
+
+

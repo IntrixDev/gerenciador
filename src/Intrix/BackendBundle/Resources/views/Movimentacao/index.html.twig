@@ -1,0 +1,45 @@
+{% extends 'BackendBundle:Layout:layout.html.twig' %}
+
+{% block body %}
+
+    <!-- Page title -->
+    <div class="page-title">
+        <h5><i class="fa fa-file-o"></i> Movimentações do dia {{ "now"|date("d/m/Y")}}</h5>
+    </div>
+    <!-- Statistics -->
+    <ul class="row stats">
+        <li class="col-xs-3"><a href="#" class="btn btn-default">52,00</a> <span>Saldo Inicial</span></li>
+        <li class="col-xs-3"><a href="#" class="btn btn-success">520,00</a> <span>Dinheiro em caixa</span></li>
+        <li class="col-xs-3"><a href="#" class="btn btn-danger">14,00</a> <span>Dinheiro Retirado</span></li>
+        <li class="col-xs-3"><a href="#" class="btn btn-default">48,00</a> <span>Gasto com serviço</span></li>
+    </ul>
+    <!-- /statistics -->
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h6 class="panel-title">Vendas / Serviços</h6>
+        </div>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Operação</th>
+                        <th>Produto</th>
+                        <th>Forma de pagamento</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entity in entities %}
+                        <tr class="success">
+                            <td>{{ entity.operacao }}</td>
+                            <td>{{ entity.produto }}</td>
+                            <td>{{ entity.formaPagamento }}</td>
+                            <td>{{ entity.valor|price }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

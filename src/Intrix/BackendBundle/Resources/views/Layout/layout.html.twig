@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Intrix - Painel administrativo</title>
+
+        <link href="{{ asset('backend/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('backend/css/brain-theme.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('backend/css/styles.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('backend/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+        <link href='http://fonts.googleapis.com/css?family=Cuprum' rel='stylesheet' type='text/css'>
+
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+
+        <script type="text/javascript" src="{{ asset('backend/js/plugins/charts/flot.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('backend/js/plugins/charts/flot.orderbars.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('backend/js/plugins/charts/flot.pie.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('backend/js/plugins/charts/flot.time.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('backend/js/plugins/charts/flot.animator.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('backend/js/plugins/charts/excanvas.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('backend/js/plugins/charts/flot.resize.min.js') }}"></script>
+
+        <script type="text/javascript" src="{{ asset('backend/js/plugins/forms/uniform.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('backend/js/plugins/forms/select2.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('backend/js/plugins/forms/inputmask.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('backend/js/plugins/forms/autosize.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('backend/js/plugins/forms/inputlimit.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('backend/js/plugins/forms/listbox.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('backend/js/plugins/forms/multiselect.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('backend/js/plugins/forms/validate.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('backend/js/plugins/forms/tags.min.js') }}"></script>
+
+        <script type="text/javascript" src="{{ asset('backend/js/plugins/forms/uploader/plupload.full.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('backend/js/plugins/forms/uploader/plupload.queue.min.js') }}"></script>
+
+        <script type="text/javascript" src="{{ asset('backend/js/plugins/forms/wysihtml5/wysihtml5.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('backend/js/plugins/forms/wysihtml5/toolbar.js') }}"></script>
+
+        <script type="text/javascript" src="{{ asset('backend/js/plugins/interface/jgrowl.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('backend/js/plugins/interface/datatables.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('backend/js/plugins/interface/prettify.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('backend/js/plugins/interface/fancybox.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('backend/js/plugins/interface/colorpicker.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('backend/js/plugins/interface/timepicker.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('backend/js/plugins/interface/fullcalendar.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('backend/js/plugins/interface/collapsible.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('backend/js/bootstrap.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('backend/js/application.js') }}"></script>
+    {% block javascript %}{% endblock %}
+    <script type="text/javascript" src="{{ asset('backend/js/charts/simple_graph.js') }}"></script>
+
+</head>
+
+<body>
+    {{ render(controller('BackendBundle:Layout:navTop', { local: app.request.attributes.get('_route')} )) }}
+
+
+    <!-- Page header -->
+    <div class="container">
+        <div class="page-header">
+            <div class="logo">
+                <a href="index.html" title="">
+                    <img src="" alt="">
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- /page header -->
+
+
+    <!-- Page container -->
+    <div class="page-container container">
+
+        {{ render(controller('BackendBundle:Layout:navLeft', { local: app.request.attributes.get('_route')} )) }}
+
+        <!-- Page content -->
+        <div class="page-content">
+        {% block body %}{% endblock %}
+    </div>
+</div>
+
+</body>
+</html>

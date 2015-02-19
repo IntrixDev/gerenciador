@@ -1,0 +1,21 @@
+produto_list:
+    path:     /
+    defaults: { _controller: "BackendBundle:Produto:index" }
+
+produto_new:
+    path:     /novo
+    defaults: { _controller: "BackendBundle:Produto:new" }
+
+produto_create:
+    path:     /criar
+    defaults: { _controller: "BackendBundle:Produto:create" }
+    requirements: { _method: post }
+
+produto_edit:
+    path:     /{id}/editar
+    defaults: { _controller: "BackendBundle:Produto:edit" }
+
+produto_update:
+    path:     /{id}/update
+    defaults: { _controller: "BackendBundle:Produto:update" }
+    requirements: { _method: post|put }
