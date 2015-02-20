@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Intrix\BackendBundle\Entity\Produto;
 use Intrix\BackendBundle\Form\ProdutoType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Produto controller.
@@ -155,6 +156,14 @@ class ProdutoController extends Controller {
                     'entity' => $entity,
                     'edit_form' => $editForm->createView(),
         ));
+    }
+
+    public function ajaxPrecoAction($id) {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('BackendBundle:Produto')->findOneById($id);
+        
+        return new JsonResponse(array('preco' => $entity->getPreco()));
     }
 
     private function savePreco($request) {

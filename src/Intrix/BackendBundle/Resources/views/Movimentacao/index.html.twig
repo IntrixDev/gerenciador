@@ -4,7 +4,13 @@
 
     <!-- Page title -->
     <div class="page-title">
-        <h5><i class="fa fa-file-o"></i> Movimentações do dia {{ "now"|date("d/m/Y")}}</h5>
+        <h5><i class="fa fa-file-o"></i> Lista as movimentações</h5>
+        <div class="btn-group">
+            <a href="#" class="btn btn-link btn-lg btn-icon dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cogs"></i><span class="caret"></span></a>
+            <ul class="dropdown-menu dropdown-menu-right">
+                <li><a href="{{ path('movimentacao_new') }}">Adicionar uma movimentação</a></li>
+            </ul>
+        </div>
     </div>
     <!-- Statistics -->
     <ul class="row stats">
@@ -14,27 +20,27 @@
         <li class="col-xs-3"><a href="#" class="btn btn-default">48,00</a> <span>Gasto com serviço</span></li>
     </ul>
     <!-- /statistics -->
-    <div class="panel panel-primary">
+    <div class="panel panel-default">
         <div class="panel-heading">
-            <h6 class="panel-title">Vendas / Serviços</h6>
+            <h6 class="panel-title">Movimentações</h6>
         </div>
-        <div class="table-responsive">
-            <table class="table">
+        <div class="datatable">
+            <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
-                        <th>Operação</th>
                         <th>Produto</th>
-                        <th>Forma de pagamento</th>
                         <th>Valor</th>
+                        <th>Tipo</th>
+                        <th>Descrição</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for entity in entities %}
                         <tr class="success">
-                            <td>{{ entity.operacao }}</td>
                             <td>{{ entity.produto }}</td>
-                            <td>{{ entity.formaPagamento }}</td>
-                            <td>{{ entity.valor|price }}</td>
+                            <td>R$ {{ entity.valor|number_format(2, ',', '.') }}</td>
+                            <td>{{ entity.tipoFormated }}</td>
+                            <td>{{ entity.descricao }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>

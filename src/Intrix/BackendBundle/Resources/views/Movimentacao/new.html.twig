@@ -2,7 +2,7 @@
 
 {% block body %}
     <div class="page-title">
-        <h5><i class="fa fa-file-o"></i> Cria uma nova movimentação</h5>
+        <h5><i class="fa fa-file-o"></i> Cria um nova movimentação</h5>
     </div>
     <!-- Statistics -->
     <ul class="row stats">
@@ -15,4 +15,10 @@
     <!-- Right labels -->
     {{ form(form) }}
 
+{% endblock %}
+{% block javascript %}
+    <script type="text/javascript">
+        var url = '{{ path("ajax_preco", {'id': 0}) }}'; 
+    </script>
+    <script type="text/javascript" src="{{ asset('backend/js/movimentacao/movimentacao.js') }}"></script>
 {% endblock %}

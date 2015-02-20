@@ -12,6 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProdutoRepository extends EntityRepository {
 
-    
+    public function getAllAtivos() {
+        $em = $this->getEntityManager();
+        $query = $em->createQueryBuilder()
+                ->select('a')
+                ->from('BackendBundle:Produto', 'a')
+                ->where("a.status = '1'");
 
+
+        return $query;
+    }
 }

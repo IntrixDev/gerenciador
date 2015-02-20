@@ -20,7 +20,7 @@ class ProdutoType extends AbstractType {
                     'label' => 'Produto',
                 ))
                 ->add('preco', 'money', array(
-                    'attr' => array('class' => 'form-control'),
+                    'attr' => array('class' => 'form-control preco'),
                     'label' => 'Valor',
                     'currency' => 'BRL',
                     'grouping' => true
@@ -46,9 +46,7 @@ class ProdutoType extends AbstractType {
                         'cols' => '5',
                         'class' => 'form-control'
                     )
-                ))
-
-        ;
+                ));
     }
 
     /**

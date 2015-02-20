@@ -19,3 +19,8 @@ produto_update:
     path:     /{id}/update
     defaults: { _controller: "BackendBundle:Produto:update" }
     requirements: { _method: post|put }
+
+ajax_preco:
+    path:     /{id}/ajax_preco
+    defaults: { _controller: "BackendBundle:Produto:ajaxPreco" }
+    

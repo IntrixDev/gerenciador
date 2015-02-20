@@ -53,6 +53,18 @@ class Produto {
     private $descricao;
 
     /**
+     * @ORM\OneToMany(targetEntity="Movimentacao", mappedBy="produto")
+     */
+    private $movimentacoes;
+
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        $this->movimentacoes = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
      * Get id
      *
      * @return integer 
@@ -149,17 +161,47 @@ class Produto {
         switch ($this->status) {
             case '1':
                 return 'Em estoque';
-                break;
             case '2':
                 return 'Em falta';
-                break;
             case '3':
                 return 'Inativo';
-                break;
             default :
                 return $this->status;
-                break;
         }
+    }
+
+    /**
+     * Add movimentacoes
+     *
+     * @param \Intrix\BackendBundle\Entity\Movimentacao $movimentacoes
+     * @return Produto
+     */
+    public function addMovimentaco(\Intrix\BackendBundle\Entity\Movimentacao $movimentacoes) {
+        $this->movimentacoes[] = $movimentacoes;
+
+        return $this;
+    }
+
+    /**
+     * Remove movimentacoes
+     *
+     * @param \Intrix\BackendBundle\Entity\Movimentacao $movimentacoes
+     */
+    public function removeMovimentaco(\Intrix\BackendBundle\Entity\Movimentacao $movimentacoes) {
+        $this->movimentacoes->removeElement($movimentacoes);
+    }
+
+    /**
+     * Get movimentacoes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMovimentacoes() {
+        return $this->movimentacoes;
+    }
+
+    public function __toString() {
+        return $this->nome;
     }
 
 }

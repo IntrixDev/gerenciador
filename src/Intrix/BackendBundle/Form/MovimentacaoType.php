@@ -14,39 +14,7 @@ class MovimentacaoType extends AbstractType {
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
-        $aOperacoes = array(
-            '0' => 'Selecione...',
-            'Entradas' => array(
-                '1' => 'Vendas',
-                '2' => 'Serviço',
-            ),
-            'Saídas' => array(
-                '3' => 'Saída em dinheiro',
-                '4' => 'Saída em serviços',
-                '5' => 'Saída para compra de produto',
-            )
-        );
-
-        $aPagamentos = array(
-            '0' => 'Selecione...',
-            '1' => 'Dinheiro',
-            '2' => 'Cheque',
-            'Cartão' => array(
-                '3' => 'Débito',
-                '4' => 'Crédito',
-            )
-        );
-
         $builder
-                ->add('operacao', 'choice', array(
-                    'attr' => array(
-                        'data-placeholder' => 'Escolha a operação...',
-                        'class' => 'select',
-                        'tabindex' => '2'
-                    ),
-                    'label' => 'Operação',
-                    'choices' => $aOperacoes,
-                ))
                 ->add('produto', 'entity', array(
                     'empty_value' => 'Selecione...',
                     'class' => 'BackendBundle:Produto',
@@ -56,31 +24,18 @@ class MovimentacaoType extends AbstractType {
                     },
                     'attr' => array(
                         'placeholder' => 'Escolha um produto...',
-                        'class' => 'minimum-select',
+                        'class' => 'produto_preco',
                         'tabindex' => '2'
                     ),
-                    'label' => 'Produto / Servico',
+                    'label' => 'Produto',
                 ))
                 ->add('valor', 'money', array(
-                    'attr' => array('class' => 'form-control'),
+                    'attr' => array('class' => 'form-control preco'),
                     'label' => 'Valor',
-                    'divisor' => 100
+                    'currency' => 'BRL',
+                    'grouping' => true
                 ))
-                ->add('formaPagamento', 'choice', array(
-                    'attr' => array(
-                        'data-placeholder' => 'Escolha a forma de pagamento...',
-                        'class' => 'select',
-                        'tabindex' => '2'
-                    ),
-                    'label' => 'Forma de pagamento',
-                    'choices' => $aPagamentos,
-                ))
-                ->add('vezes', 'text', array(
-                    'label' => 'Vezes',
-                    'attr' => array('class' => 'form-control'))
-                )
-                //<textarea rows="5" cols="5" class="form-control"></textarea>
-                ->add('observacao', 'textarea', array(
+                ->add('descricao', 'textarea', array(
                     'label' => 'Observação',
                     'attr' => array(
                         'rows' => '5',
@@ -88,7 +43,28 @@ class MovimentacaoType extends AbstractType {
                         'class' => 'form-control'
                     )
                 ))
-        ;
+                ->add('tipo', 'choice', array(
+                    'attr' => array(
+                        'data-placeholder' => 'Escolha...',
+                        'class' => 'select',
+                        'tabindex' => '2'
+                    ),
+                    'label' => 'Status',
+                    'choices' => array(
+                        '0' => 'Escolha...',
+                        '1' => 'Entrada',
+                        '2' => 'Saída',
+                        '3' => 'Serviço',
+                    )
+                ))
+                ->add('descricao', 'textarea', array(
+                    'label' => 'Observação',
+                    'attr' => array(
+                        'rows' => '5',
+                        'cols' => '5',
+                        'class' => 'form-control'
+                    )
+        ));
     }
 
     /**
@@ -100,7 +76,7 @@ class MovimentacaoType extends AbstractType {
             'attr' => array(
                 'class' => 'form-horizontal',
                 'role' => 'form',
-                'titulo' => 'Vendas / Serviços / Saídas'
+                'titulo' => 'Movimentação'
             ),
         ));
     }
