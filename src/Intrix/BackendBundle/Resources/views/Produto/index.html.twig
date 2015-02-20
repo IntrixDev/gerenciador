@@ -4,7 +4,13 @@
 
     <!-- Page title -->
     <div class="page-title">
-        <h5><i class="fa fa-file-o"></i> Lista de produtos e serviços</h5>
+        <h5><i class="fa fa-file-o"></i> Lista de produtos</h5>
+        <div class="btn-group">
+            <a href="#" class="btn btn-link btn-lg btn-icon dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cogs"></i><span class="caret"></span></a>
+            <ul class="dropdown-menu dropdown-menu-right">
+                <li><a href="{{ path('produto_new') }}">Adicionar um produto</a></li>
+            </ul>
+        </div>
     </div>
     <!-- Statistics -->
     <ul class="row stats">
@@ -14,76 +20,36 @@
         <li class="col-xs-3"><a href="#" class="btn btn-default">48,00</a> <span>Gasto com serviço</span></li>
     </ul>
     <!-- /statistics -->
-    <div class="panel panel-primary">
+    <div class="panel panel-default">
         <div class="panel-heading">
-            <h6 class="panel-title">Produtos / Serviços</h6>
+            <h6 class="panel-title">Produtos</h6>
         </div>
-        <div class="tabbable">
-            <ul class="nav nav-tabs toolbar-tabs">
-                <li class="active"><a href="#table-tab1" data-toggle="tab"><i class="fa fa-inbox"></i>Produtos</a></li>
-                <li><a href="#table-tab2" data-toggle="tab"><i class="fa fa-cogs"></i>Serviços</a></li>
-            </ul>
-            <div class="tab-content table-tabs">
-                <div class="tab-pane fade active in" id="table-tab1">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Nome</th>
-                                    <th>Tipo</th>
-                                    <th>Status</th>
-                                    <th>Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for produto in produtos %}
-                                    <tr class="success">
-                                        <td>{{ produto.nome }}</td>
-                                        <td>{{ produto.tipo }}</td>
-                                        <td>{{ produto.status }}</td>
-                                        <td>
-                                            <div class="table-controls">
-                                                <a title="" class="btn btn-default btn-icon btn-xs tip" href="{{ path('produto_edit', { 'id': produto.id }) }}" data-original-title="Editar"><i class="fa fa-pencil"></i></a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="tab-pane fade" id="table-tab2">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Nome</th>
-                                    <th>Tipo</th>
-                                    <th>Status</th>
-                                    <th>Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for servico in servicos %}
-                                    <tr class="success">
-                                        <td>{{ servico.nome }}</td>
-                                        <td>{{ servico.tipo }}</td>
-                                        <td>{{ servico.status }}</td>
-                                        <td>
-                                            <div class="table-controls">
-                                                <a title="" class="btn btn-default btn-icon btn-xs tip" href="{{ path('produto_edit', { 'id': servico.id }) }}" data-original-title="Editar"><i class="fa fa-pencil"></i></a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+        <div class="datatable">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Preço</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entity in entities %}
+                        <tr class="success">
+                            <td>{{ entity.nome }}</td>
+                            <td>R$ {{ entity.preco|number_format(2, ',', '.') }}</td>
+                            <td>{{ entity.statusFormated }}</td>
+                            <td>
+                                <div class="table-controls">
+                                    <a title="" class="btn btn-default btn-icon btn-xs tip" href="{{ path('produto_edit', { 'id': entity.id }) }}" data-original-title="Editar"><i class="fa fa-pencil"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
-
-
     </div>
 
 {% endblock %}

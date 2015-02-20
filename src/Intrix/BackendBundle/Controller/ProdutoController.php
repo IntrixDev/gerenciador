@@ -20,34 +20,20 @@ class ProdutoController extends Controller {
     public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
-        $produtos = $em->getRepository('BackendBundle:Produto')->getProdutos();
-        $servicos = $em->getRepository('BackendBundle:Produto')->getServicos();
+        $produtos = $em->getRepository('BackendBundle:Produto')->findAll();
 
         return $this->render('BackendBundle:Produto:index.html.twig', array(
-                    'produtos' => $produtos,
-                    'servicos' => $servicos,
+                    'entities' => $produtos,
         ));
     }
 
     /**
-     * Creates a new Produto entity.
+     * Displays a form to create a new Produto entity.
      *
      */
-    public function createAction(Request $request) {
+    public function newAction() {
         $entity = new Produto();
         $form = $this->createCreateForm($entity);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            $request->getSession()->getFlashBag()->add(
-                    'notice', 'Produto salvo com sucesso!'
-            );
-            return $this->redirect($this->generateUrl('produto_new'));
-        }
 
         return $this->render('BackendBundle:Produto:new.html.twig', array(
                     'entity' => $entity,
@@ -74,12 +60,25 @@ class ProdutoController extends Controller {
     }
 
     /**
-     * Displays a form to create a new Produto entity.
+     * Creates a new Produto entity.
      *
      */
-    public function newAction() {
+    public function createAction(Request $request) {
         $entity = new Produto();
         $form = $this->createCreateForm($entity);
+        $request = $this->savePreco($request);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity);
+            $em->flush();
+
+            $request->getSession()->getFlashBag()->add(
+                    'notice', 'Produto salvo com sucesso!'
+            );
+            return $this->redirect($this->generateUrl('produto_new'));
+        }
 
         return $this->render('BackendBundle:Produto:new.html.twig', array(
                     'entity' => $entity,
@@ -140,6 +139,7 @@ class ProdutoController extends Controller {
         }
 
         $editForm = $this->createEditForm($entity);
+        $request = $this->savePreco($request);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
@@ -155,6 +155,16 @@ class ProdutoController extends Controller {
                     'entity' => $entity,
                     'edit_form' => $editForm->createView(),
         ));
+    }
+
+    private function savePreco($request) {
+        $aSave = array('', '.');
+        $aMask = array('.', ',');
+        $aPost = $request->request->all();
+        $aPost['intrix_backendbundle_produto']['preco'] = str_replace($aMask, $aSave, $aPost['intrix_backendbundle_produto']['preco']);
+        $request->request->replace($aPost);
+
+        return $request;
     }
 
 }

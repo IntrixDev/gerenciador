@@ -12,27 +12,6 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProdutoRepository extends EntityRepository {
 
-    public function getProdutos() {
-        return $this->findByTipo('Produto');
-    }
-
-    public function getServicos() {
-        return $this->findByTipo('Serviço');
-    }
-
-    public function getAllAtivos() {
-        $em = $this->getEntityManager();
-        $query = $em->createQueryBuilder()
-                ->select(a)
-                ->from('BackendBundle:Produto', 'a')
-                ->where('a.status = :status')->setParameter('status', 'Ativo')
-                ->orWhere('a.status = :status')->setParameter('status', 'Em Estoque')
-                ->orderBy('a.tipo');
-        echo "<pre>";
-        var_dump($query->getQuery());
-        exit();
-        
-        return $query;
-    }
+    
 
 }

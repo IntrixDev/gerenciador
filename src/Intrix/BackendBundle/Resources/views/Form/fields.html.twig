@@ -125,4 +125,9 @@
         {% endspaceless %}
     {% endblock button_widget %}
 
+    {% block money_widget %}
+        {% spaceless %}
+            {{ block('form_widget_simple') }}
+        {% endspaceless %}
+    {% endblock money_widget %}
 

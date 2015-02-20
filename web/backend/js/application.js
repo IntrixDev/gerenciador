@@ -28,9 +28,13 @@ $(function () {
         "sPaginationType": "full_numbers",
         "sDom": '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
         "oLanguage": {
-            "sSearch": "<span>Filter:</span> _INPUT_",
-            "sLengthMenu": "<span>Show entries:</span> _MENU_",
-            "oPaginate": {"sFirst": "First", "sLast": "Last", "sNext": ">", "sPrevious": "<"}
+            "sSearch": "<span>Filtro:</span> _INPUT_",
+            "sLengthMenu": "<span>Registros por página:</span> _MENU_",
+            "sInfo": "Mostrando do _START_ ao _END_ de _TOTAL_ registros",
+            "sInfoEmpty": "Mostrando do 0 ao 0 de 0 registros",
+            "sZeroRecords": "Desculpa, mas não encontramos nenhum registro",
+            "sInfoFiltered": "(Filtrado em um total de _MAX_ registros)",
+            "oPaginate": {"sFirst": "Primeiro", "sLast": "Último", "sNext": ">", "sPrevious": "<"}
         }
     });
 
@@ -45,7 +49,9 @@ $(function () {
         "oLanguage": {
             "sSearch": "<span>Filter:</span> _INPUT_",
             "sLengthMenu": "<span>Show:</span> _MENU_",
-            "oPaginate": {"sFirst": "First", "sLast": "Last", "sNext": ">", "sPrevious": "<"}
+            "sZeroRecords": "Desculpa, mas não encontramos nenhum registro",
+            "oPaginate": {"sFirst": "First", "sLast": "Last", "sNext": ">", "sPrevious": "<"},
+            
         },
         "oTableTools": {
             "sRowSelect": "multi",
@@ -210,7 +216,7 @@ $(function () {
 
     //===== Adding placeholder to Datatable filter input field =====//
 
-    $('.dataTables_filter input[type=text]').attr('placeholder', 'Type to filter...');
+    $('.dataTables_filter input[type=text]').attr('placeholder', 'Pesquisar..');
 
 
 

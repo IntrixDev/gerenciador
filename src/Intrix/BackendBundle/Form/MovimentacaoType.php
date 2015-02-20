@@ -61,9 +61,10 @@ class MovimentacaoType extends AbstractType {
                     ),
                     'label' => 'Produto / Servico',
                 ))
-                ->add('valor', 'text', array(
+                ->add('valor', 'money', array(
                     'attr' => array('class' => 'form-control'),
-                    'label' => 'Valor'
+                    'label' => 'Valor',
+                    'divisor' => 100
                 ))
                 ->add('formaPagamento', 'choice', array(
                     'attr' => array(

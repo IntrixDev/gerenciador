@@ -2,7 +2,7 @@
 
 {% block body %}
     <div class="page-title">
-        <h5><i class="fa fa-file-o"></i> Cria um novo produto / serviço</h5>
+        <h5><i class="fa fa-file-o"></i> Editando o produto: {{ edit_form.vars.value.nome }}</h5>
     </div>
     <!-- Statistics -->
     <ul class="row stats">
@@ -15,4 +15,8 @@
     <!-- Right labels -->
     {{ form(edit_form) }}
 
+{% endblock %}
+
+{% block javascript %}
+    <script type="text/javascript" src="{{ asset('backend/js/produto/produto.js') }}"></script>
 {% endblock %}

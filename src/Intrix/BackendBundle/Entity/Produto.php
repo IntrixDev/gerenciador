@@ -24,28 +24,33 @@ class Produto {
     /**
      * @var string
      *
-     * @ORM\Column(name="nome", type="string", length=255)
+     * @ORM\Column(type="string", length=255)
      */
     private $nome;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="tipo", type="string", columnDefinition="ENUM('Produto', 'Serviço')")
-     */
-    private $tipo;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="status", type="string", columnDefinition="ENUM('Ativo', 'Inativo', 'Em Estoque', 'Em Falta')")
+     * @ORM\Column(type="string", columnDefinition="ENUM('1', '2', '3')", options={"comment" = "1 = Em estoque, 2 = Em falta, 3 = Inativo"})
+     * 
      */
     private $status;
 
     /**
-     * @ORM\OneToOne(targetEntity="Movimentacao", mappedBy="produto")
+     * @var float $preco
+     *
+     * @ORM\Column(type="float")
+     * 
      */
-    private $movimentacao;
+    private $preco;
+
+    /**
+     *
+     * @var text
+     * @ORM\Column(type="text")
+     * 
+     */
+    private $descricao;
 
     /**
      * Get id
@@ -78,27 +83,6 @@ class Produto {
     }
 
     /**
-     * Set tipo
-     *
-     * @param string $tipo
-     * @return Produto
-     */
-    public function setTipo($tipo) {
-        $this->tipo = $tipo;
-
-        return $this;
-    }
-
-    /**
-     * Get tipo
-     *
-     * @return string 
-     */
-    public function getTipo() {
-        return $this->tipo;
-    }
-
-    /**
      * Set status
      *
      * @param string $status
@@ -120,28 +104,62 @@ class Produto {
     }
 
     /**
-     * Set movimentacao
+     * Set preco
      *
-     * @param \Intrix\BackendBundle\Entity\Movimentacao $movimentacao
+     * @param float $preco
      * @return Produto
      */
-    public function setMovimentacao(\Intrix\BackendBundle\Entity\Movimentacao $movimentacao = null) {
-        $this->movimentacao = $movimentacao;
+    public function setPreco($preco) {
+        $this->preco = $preco;
 
         return $this;
     }
 
     /**
-     * Get movimentacao
+     * Get preco
      *
-     * @return \Intrix\BackendBundle\Entity\Movimentacao 
+     * @return float 
      */
-    public function getMovimentacao() {
-        return $this->movimentacao;
+    public function getPreco() {
+        return $this->preco;
     }
 
-    public function __toString() {
-        return $this->nome;
+    /**
+     * Set descricao
+     *
+     * @param string $descricao
+     * @return Produto
+     */
+    public function setDescricao($descricao) {
+        $this->descricao = $descricao;
+
+        return $this;
+    }
+
+    /**
+     * Get descricao
+     *
+     * @return string 
+     */
+    public function getDescricao() {
+        return $this->descricao;
+    }
+
+    public function getStatusFormated() {
+        switch ($this->status) {
+            case '1':
+                return 'Em estoque';
+                break;
+            case '2':
+                return 'Em falta';
+                break;
+            case '3':
+                return 'Inativo';
+                break;
+            default :
+                return $this->status;
+                break;
+        }
     }
 
 }

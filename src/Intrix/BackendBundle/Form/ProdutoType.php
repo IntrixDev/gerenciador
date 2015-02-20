@@ -17,20 +17,13 @@ class ProdutoType extends AbstractType {
         $builder
                 ->add('nome', 'text', array(
                     'attr' => array('class' => 'form-control'),
-                    'label' => 'Produto / Serviço',
+                    'label' => 'Produto',
                 ))
-                ->add('tipo', 'choice', array(
-                    'attr' => array(
-                        'data-placeholder' => 'Escolha...',
-                        'class' => 'select',
-                        'tabindex' => '2'
-                    ),
-                    'label' => 'Tipo',
-                    'choices' => array(
-                        '0' => 'Escolha...',
-                        'Produto' => 'Produto',
-                        'Serviço' => 'Serviço',
-                    )
+                ->add('preco', 'money', array(
+                    'attr' => array('class' => 'form-control'),
+                    'label' => 'Valor',
+                    'currency' => 'BRL',
+                    'grouping' => true
                 ))
                 ->add('status', 'choice', array(
                     'attr' => array(
@@ -41,12 +34,20 @@ class ProdutoType extends AbstractType {
                     'label' => 'Status',
                     'choices' => array(
                         '0' => 'Escolha...',
-                        'Ativo' => 'Ativo',
-                        'Inativo' => 'Inativo',
-                        'Em Estoque' => 'Em Estoque',
-                        'Em Falta' => 'Em Falta',
+                        '1' => 'Em estoque',
+                        '2' => 'Em falta',
+                        '3' => 'Inativo',
                     )
                 ))
+                ->add('descricao', 'textarea', array(
+                    'label' => 'Observação',
+                    'attr' => array(
+                        'rows' => '5',
+                        'cols' => '5',
+                        'class' => 'form-control'
+                    )
+                ))
+
         ;
     }
 
@@ -59,7 +60,7 @@ class ProdutoType extends AbstractType {
             'attr' => array(
                 'class' => 'form-horizontal',
                 'role' => 'form',
-                'titulo' => 'Produto / Serviço'
+                'titulo' => 'Produto'
             ),
         ));
     }
