@@ -53,6 +53,12 @@ class Produto {
     private $descricao;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Categoria", inversedBy="produtos")
+     * @ORM\JoinColumn(name="categoria_id", referencedColumnName="id")
+     */
+    private $categoria;
+
+    /**
      * @ORM\OneToMany(targetEntity="Movimentacao", mappedBy="produto")
      */
     private $movimentacoes;
@@ -204,4 +210,27 @@ class Produto {
         return $this->nome;
     }
 
+
+    /**
+     * Set categoria
+     *
+     * @param \Intrix\BackendBundle\Entity\Categoria $categoria
+     * @return Produto
+     */
+    public function setCategoria(\Intrix\BackendBundle\Entity\Categoria $categoria = null)
+    {
+        $this->categoria = $categoria;
+    
+        return $this;
+    }
+
+    /**
+     * Get categoria
+     *
+     * @return \Intrix\BackendBundle\Entity\Categoria 
+     */
+    public function getCategoria()
+    {
+        return $this->categoria;
+    }
 }

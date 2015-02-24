@@ -5,40 +5,18 @@ namespace Intrix\BackendBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Intrix\BackendBundle\Entity\CategoriaRepository;
 
-class ProdutoType extends AbstractType {
+class CategoriaType extends AbstractType {
 
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
-
         $builder
-                ->add('categoria', 'entity', array(
-                    'empty_value' => 'Selecione...',
-                    'class' => 'BackendBundle:Categoria',
-                    'property' => 'nome',
-                    'query_builder' => function(CategoriaRepository $er) {
-                        return $er->getAllAtivos();
-                    },
-                    'attr' => array(
-                        'placeholder' => 'Escolha uma categoria...',
-                        'class' => 'select',
-                        'tabindex' => '2'
-                    ),
-                    'label' => 'Categoria',
-                ))
                 ->add('nome', 'text', array(
                     'attr' => array('class' => 'form-control'),
-                    'label' => 'Produto',
-                ))
-                ->add('preco', 'money', array(
-                    'attr' => array('class' => 'form-control preco'),
-                    'label' => 'Valor',
-                    'currency' => 'BRL',
-                    'grouping' => true
+                    'label' => 'Categoria',
                 ))
                 ->add('status', 'choice', array(
                     'attr' => array(
@@ -48,10 +26,9 @@ class ProdutoType extends AbstractType {
                     ),
                     'label' => 'Status',
                     'choices' => array(
-                        '0' => 'Escolha...',
-                        '1' => 'Em estoque',
-                        '2' => 'Em falta',
-                        '3' => 'Inativo',
+                        '' => 'Selecione...',
+                        '0' => 'Inativo',
+                        '1' => 'Ativo',
                     )
                 ))
                 ->add('descricao', 'textarea', array(
@@ -62,6 +39,7 @@ class ProdutoType extends AbstractType {
                         'class' => 'form-control'
                     )
         ));
+        ;
     }
 
     /**
@@ -69,11 +47,11 @@ class ProdutoType extends AbstractType {
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
-            'data_class' => 'Intrix\BackendBundle\Entity\Produto',
+            'data_class' => 'Intrix\BackendBundle\Entity\Categoria',
             'attr' => array(
                 'class' => 'form-horizontal',
                 'role' => 'form',
-                'titulo' => 'Produto'
+                'titulo' => 'Categoria'
             ),
         ));
     }
@@ -82,7 +60,7 @@ class ProdutoType extends AbstractType {
      * @return string
      */
     public function getName() {
-        return 'intrix_backendbundle_produto';
+        return 'intrix_backendbundle_categoria';
     }
 
 }

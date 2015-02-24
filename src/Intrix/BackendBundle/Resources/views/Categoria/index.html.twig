@@ -1,0 +1,55 @@
+{% extends 'BackendBundle:Layout:layout.html.twig' %}
+
+{% block body %}
+
+    <!-- Page title -->
+    <div class="page-title">
+        <h5><i class="fa fa-file-o"></i> Lista as categorias</h5>
+        <div class="btn-group">
+            <a href="#" class="btn btn-link btn-lg btn-icon dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cogs"></i><span class="caret"></span></a>
+            <ul class="dropdown-menu dropdown-menu-right">
+                <li><a href="{{ path('categoria_new') }}">Adicionar uma nova categoria</a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- Statistics -->
+    <ul class="row stats">
+        <li class="col-xs-3"><a href="#" class="btn btn-default">52,00</a> <span>Saldo Inicial</span></li>
+        <li class="col-xs-3"><a href="#" class="btn btn-success">520,00</a> <span>Dinheiro em caixa</span></li>
+        <li class="col-xs-3"><a href="#" class="btn btn-danger">14,00</a> <span>Dinheiro Retirado</span></li>
+        <li class="col-xs-3"><a href="#" class="btn btn-default">48,00</a> <span>Gasto com serviço</span></li>
+    </ul>
+    <!-- /statistics -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h6 class="panel-title">Categoria</h6>
+        </div>
+        <div class="datatable">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Status</th>
+                        <th>Descrição</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entity in entities %}
+                        <tr class="success">
+                            <td>{{ entity.nome }}</td>
+                            <td>{{ entity.statusFormated }}</td>
+                            <td>{{ entity.descricao }}</td>
+                            <td>
+                                <div class="table-controls">
+                                    <a title="" class="btn btn-default btn-icon btn-xs tip" href="{{ path('categoria_edit', { 'id': entity.id }) }}" data-original-title="Editar"><i class="fa fa-pencil"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}
