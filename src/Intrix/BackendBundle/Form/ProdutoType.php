@@ -61,7 +61,8 @@ class ProdutoType extends AbstractType {
                         'cols' => '5',
                         'class' => 'form-control'
                     )
-        ));
+                ))
+                ->add('codigo', 'hidden');
     }
 
     /**
@@ -75,6 +76,7 @@ class ProdutoType extends AbstractType {
                 'role' => 'form',
                 'titulo' => 'Produto'
             ),
+            'validation_groups' => array('registro')
         ));
     }
 

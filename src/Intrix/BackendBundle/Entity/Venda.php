@@ -5,12 +5,12 @@ namespace Intrix\BackendBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Movimentacao
+ * Venda
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Intrix\BackendBundle\Entity\MovimentacaoRepository")
+ * @ORM\Entity(repositoryClass="Intrix\BackendBundle\Entity\VendaRepository")
  */
-class Movimentacao {
+class Venda {
 
     /**
      * @var integer
@@ -77,7 +77,7 @@ class Movimentacao {
      * Set valor
      *
      * @param float $valor
-     * @return Movimentacao
+     * @return Venda
      */
     public function setValor($valor) {
         $this->valor = $valor;
@@ -98,7 +98,7 @@ class Movimentacao {
      * Set descricao
      *
      * @param string $descricao
-     * @return Movimentacao
+     * @return Venda
      */
     public function setDescricao($descricao) {
         $this->descricao = $descricao;
@@ -119,7 +119,7 @@ class Movimentacao {
      * Set tipo
      *
      * @param string $tipo
-     * @return Movimentacao
+     * @return Venda
      */
     public function setTipo($tipo) {
         $this->tipo = $tipo;
@@ -140,7 +140,7 @@ class Movimentacao {
      * Set produto
      *
      * @param \Intrix\BackendBundle\Entity\Produto $produto
-     * @return Movimentacao
+     * @return Venda
      */
     public function setProduto(\Intrix\BackendBundle\Entity\Produto $produto = null) {
         $this->produto = $produto;
@@ -175,12 +175,12 @@ class Movimentacao {
      * Set criado_em
      *
      * @param \DateTime $criadoEm
-     * @return Movimentacao
+     * @return Venda
      */
     public function setCriadoEm(\DateTime $criadoEm)
     {
         $this->criado_em = $criadoEm;
-    
+
         return $this;
     }
 
@@ -193,4 +193,4 @@ class Movimentacao {
     {
         return $this->criado_em;
     }
-}
+    }

@@ -12,12 +12,12 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProdutoRepository extends EntityRepository {
 
-    public function getAllAtivos() {
+    public function getProduto() {
         $em = $this->getEntityManager();
         $query = $em->createQueryBuilder()
-                ->select('a')
-                ->from('BackendBundle:Produto', 'a')
-                ->where("a.status = '1'");
+                ->select('p')
+                ->from('BackendBundle:Produto', 'p')
+                ->where("p.status = '1'");
 
 
         return $query;

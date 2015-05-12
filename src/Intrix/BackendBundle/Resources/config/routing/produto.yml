@@ -1,3 +1,7 @@
+venda_list:
+    path:     /
+    defaults: { _controller: "BackendBundle:Produto:index" }
+
 produto_list:
     path:     /
     defaults: { _controller: "BackendBundle:Produto:index" }

@@ -2,6 +2,7 @@
 
 namespace Intrix\BackendBundle\Entity;
 
+use Symfony\Bridge\Doctrine\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -9,6 +10,9 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Intrix\BackendBundle\Entity\ProdutoRepository")
+ * @ORM\HasLifecycleCallbacks()
+ * @Assert\UniqueEntity(fields="nome", message="Esse produto já foi cadastrado.", groups={"registro"})
+ * @Assert\UniqueEntity(fields="codigo", message="Ouve um erro ao cadastrar o código do produto.", groups={"registro"})
  */
 class Produto {
 
@@ -24,14 +28,14 @@ class Produto {
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=false, unique=true)
      */
     private $nome;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", columnDefinition="ENUM('1', '2', '3')", options={"comment" = "1 = Em estoque, 2 = Em falta, 3 = Inativo"})
+     * @ORM\Column(type="string", columnDefinition="ENUM('1', '2', '3')", options={"comment" = "1 = Em estoque, 2 = Em falta, 3 = Inativo"}, nullable=false)
      * 
      */
     private $status;
@@ -39,7 +43,7 @@ class Produto {
     /**
      * @var float $preco
      *
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=false)
      * 
      */
     private $preco;
@@ -47,27 +51,35 @@ class Produto {
     /**
      *
      * @var text
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      * 
      */
     private $descricao;
 
     /**
      * @ORM\ManyToOne(targetEntity="Categoria", inversedBy="produtos")
-     * @ORM\JoinColumn(name="categoria_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="categoria_id", referencedColumnName="id", nullable=false)
      */
     private $categoria;
 
     /**
-     * @ORM\OneToMany(targetEntity="Movimentacao", mappedBy="produto")
+     * @ORM\OneToMany(targetEntity="Venda", mappedBy="produto")
      */
-    private $movimentacoes;
+    private $vendas;
+
+    /**
+     *
+     * @var text
+     * @ORM\Column(type="string", nullable=false, unique=true)
+     *  
+     */
+    private $codigo;
 
     /**
      * Constructor
      */
     public function __construct() {
-        $this->movimentacoes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->vendas = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -163,6 +175,78 @@ class Produto {
         return $this->descricao;
     }
 
+    /**
+     * Set categoria
+     *
+     * @param \Intrix\BackendBundle\Entity\Categoria $categoria
+     * @return Produto
+     */
+    public function setCategoria(\Intrix\BackendBundle\Entity\Categoria $categoria = null) {
+        $this->categoria = $categoria;
+
+        return $this;
+    }
+
+    /**
+     * Get categoria
+     *
+     * @return \Intrix\BackendBundle\Entity\Categoria 
+     */
+    public function getCategoria() {
+        return $this->categoria;
+    }
+
+    /**
+     * Add vendas
+     *
+     * @param \Intrix\BackendBundle\Entity\Venda $vendas
+     * @return Produto
+     */
+    public function addVenda(\Intrix\BackendBundle\Entity\Venda $vendas) {
+        $this->vendas[] = $vendas;
+
+        return $this;
+    }
+
+    /**
+     * Remove vendas
+     *
+     * @param \Intrix\BackendBundle\Entity\Venda $vendas
+     */
+    public function removeVenda(\Intrix\BackendBundle\Entity\Venda $vendas) {
+        $this->vendas->removeElement($vendas);
+    }
+
+    /**
+     * Get vendas
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getVendas() {
+        return $this->vendas;
+    }
+
+    /**
+     * Set codigo
+     *
+     * @param string $codigo
+     * @return Produto
+     */
+    public function setCodigo($codigo) {
+        $this->codigo = $codigo;
+
+        return $this;
+    }
+
+    /**
+     * Get codigo
+     *
+     * @return string 
+     */
+    public function getCodigo() {
+        return $this->codigo;
+    }
+
     public function getStatusFormated() {
         switch ($this->status) {
             case '1':
@@ -177,60 +261,17 @@ class Produto {
     }
 
     /**
-     * Add movimentacoes
-     *
-     * @param \Intrix\BackendBundle\Entity\Movimentacao $movimentacoes
-     * @return Produto
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
      */
-    public function addMovimentaco(\Intrix\BackendBundle\Entity\Movimentacao $movimentacoes) {
-        $this->movimentacoes[] = $movimentacoes;
+    public function prePersist($em) {
+        if (is_null($this->getId())) {
+            $categoria = str_pad($this->getCategoria()->getId(), 3, "0", STR_PAD_LEFT);
+            $produtos = $em->getEntityManager()->getRepository("BackendBundle:Produto")->findByCategoria($this->getCategoria()->getId());
 
-        return $this;
+            $produto = str_pad((count($produtos) + 1), 4, "0", STR_PAD_LEFT);
+            $this->codigo = $categoria . "." . $produto;
+        }
     }
 
-    /**
-     * Remove movimentacoes
-     *
-     * @param \Intrix\BackendBundle\Entity\Movimentacao $movimentacoes
-     */
-    public function removeMovimentaco(\Intrix\BackendBundle\Entity\Movimentacao $movimentacoes) {
-        $this->movimentacoes->removeElement($movimentacoes);
-    }
-
-    /**
-     * Get movimentacoes
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getMovimentacoes() {
-        return $this->movimentacoes;
-    }
-
-    public function __toString() {
-        return $this->nome;
-    }
-
-
-    /**
-     * Set categoria
-     *
-     * @param \Intrix\BackendBundle\Entity\Categoria $categoria
-     * @return Produto
-     */
-    public function setCategoria(\Intrix\BackendBundle\Entity\Categoria $categoria = null)
-    {
-        $this->categoria = $categoria;
-    
-        return $this;
-    }
-
-    /**
-     * Get categoria
-     *
-     * @return \Intrix\BackendBundle\Entity\Categoria 
-     */
-    public function getCategoria()
-    {
-        return $this->categoria;
-    }
 }
